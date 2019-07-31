@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Author: quytm
@@ -20,31 +21,26 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Entity
-@Table(name = "menu_items")
-public class MenuItem {
+@Table(name = "orders")
+public class Order implements Serializable {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 10, unique = true)
-    private String code;
-
-    @Column(length = 100)
-    private String name;
+    @Column(columnDefinition = "integer(10) default 0")
+    private Integer amount;
 
     @Column
-    private Integer category;
-
-    @Column(columnDefinition = "integer(10) default 0")
-    private Integer price;
-
-    @Column(columnDefinition = "integer(10) default 0")
-    private Integer quantityStock;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
