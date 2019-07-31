@@ -2,8 +2,11 @@ package com.tmq.food4u.service;
 
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Restaurant;
+import com.tmq.food4u.dto.request.CreateMenuRequest;
+import com.tmq.food4u.dto.request.CreateRestaurantRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Author: quytm
@@ -15,5 +18,9 @@ public interface RestaurantService {
     Iterable<Restaurant> findAll();
 
     List<MenuItem> getMenu(Long restaurantId);
+
+    Optional<Restaurant> createNew(CreateRestaurantRequest request);
+
+    Optional<MenuItem> createNewMenu(Long restaurantId, CreateMenuRequest request);
 
 }

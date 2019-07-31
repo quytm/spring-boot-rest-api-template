@@ -2,6 +2,8 @@ package com.tmq.food4u.dao.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 /**
  * Author: quytm
@@ -22,6 +25,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "menu_items")
 public class MenuItem {
+
+    public static final class Category {
+
+        public static final int DRINK = 1;
+        public static final int FOOD = 2;
+
+        public static final String DRINK_KEY = "DRINK";
+        public static final String FOOD_KEY = "FOOD";
+
+        public static final String DRINK_NAME = "Drink";
+        public static final String FOOD_NAME = "Food";
+
+    }
 
     @Id
     @Column(name = "ID")
@@ -46,5 +62,13 @@ public class MenuItem {
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
+
+    @Column
+    @CreationTimestamp
+    private Timestamp created;
+
+    @Column
+    @UpdateTimestamp
+    private Timestamp modified;
 
 }
