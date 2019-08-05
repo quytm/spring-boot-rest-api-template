@@ -14,6 +14,8 @@ import java.util.Optional;
  */
 public interface MenuItemService {
 
+    Optional<MenuItem> findById(Long id);
+
     List<MenuItem> findByRestaurantId(Long restaurantId);
 
     Optional<MenuItem> createNewMenu(Restaurant restaurant, CreateMenuRequest request);

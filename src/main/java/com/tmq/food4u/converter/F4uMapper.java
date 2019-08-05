@@ -2,8 +2,10 @@ package com.tmq.food4u.converter;
 
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Restaurant;
+import com.tmq.food4u.dao.entity.User;
 import com.tmq.food4u.dto.request.CreateMenuRequest;
 import com.tmq.food4u.dto.request.CreateRestaurantRequest;
+import com.tmq.food4u.dto.request.SignInRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -29,4 +31,14 @@ public class F4uMapper {
 
         return menu;
     }
+
+    public User toUser(SignInRequest request) {
+        User user = new User();
+
+        user.setUsername(request.getUsername());
+        user.setPassword(request.getPassword());
+
+        return user;
+    }
+
 }

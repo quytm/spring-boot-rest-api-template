@@ -1,8 +1,10 @@
 package com.tmq.food4u.service;
 
 import com.tmq.food4u.dao.entity.Order;
+import com.tmq.food4u.dto.request.CreateOrderRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Author: quytm
@@ -12,5 +14,7 @@ import java.util.List;
 public interface OrderService {
 
     List<Order> findByUserId(Long userId);
+
+    Optional<Order> create(CreateOrderRequest request);
 
 }

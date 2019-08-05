@@ -26,19 +26,6 @@ import java.sql.Timestamp;
 @Table(name = "menu_items")
 public class MenuItem {
 
-    public static final class Category {
-
-        public static final int DRINK = 1;
-        public static final int FOOD = 2;
-
-        public static final String DRINK_KEY = "DRINK";
-        public static final String FOOD_KEY = "FOOD";
-
-        public static final String DRINK_NAME = "Drink";
-        public static final String FOOD_NAME = "Food";
-
-    }
-
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,5 +57,19 @@ public class MenuItem {
     @Column
     @UpdateTimestamp
     private Timestamp modified;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final class Category {
+
+        public static final int DRINK = 1;
+        public static final int FOOD = 2;
+
+        public static final String DRINK_KEY = "DRINK";
+        public static final String FOOD_KEY = "FOOD";
+
+        public static final String DRINK_NAME = "Drink";
+        public static final String FOOD_NAME = "Food";
+
+    }
 
 }

@@ -37,6 +37,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public Optional<Restaurant> findById(Long restaurantId) {
+        return restaurantRepository.findById(restaurantId);
+    }
+
+    @Override
     public Optional<Restaurant> createNew(CreateRestaurantRequest request) {
 
         Restaurant restaurant = mapper.toRestaurant(request);

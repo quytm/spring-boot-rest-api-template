@@ -2,8 +2,10 @@ package com.tmq.food4u.converter;
 
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Restaurant;
+import com.tmq.food4u.dao.entity.User;
 import com.tmq.food4u.dto.response.MenuItemResponse;
 import com.tmq.food4u.dto.response.RestaurantInfo;
+import com.tmq.food4u.dto.response.SignInResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -53,6 +55,12 @@ public class F4uTransform {
         }
 
         return "";
+    }
+
+    public SignInResponse toSignInResponse(User user) {
+        SignInResponse response = new SignInResponse();
+        response.setUsername(user.getUsername());
+        return response;
     }
 
 }

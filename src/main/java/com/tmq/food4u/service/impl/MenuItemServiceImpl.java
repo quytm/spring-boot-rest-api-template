@@ -27,6 +27,11 @@ public class MenuItemServiceImpl implements MenuItemService {
     private F4uMapper mapper;
 
     @Override
+    public Optional<MenuItem> findById(Long id) {
+        return menuItemRepository.findById(id);
+    }
+
+    @Override
     public List<MenuItem> findByRestaurantId(Long restaurantId) {
         return menuItemRepository.findByRestaurantId(restaurantId);
     }

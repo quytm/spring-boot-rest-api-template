@@ -33,7 +33,7 @@ public class Order implements Serializable {
     private Long id;
 
     @Column(columnDefinition = "integer(10) default 0")
-    private Integer amount;
+    private long amount;
 
     @Column
     private Integer status;
@@ -54,4 +54,20 @@ public class Order implements Serializable {
     @UpdateTimestamp
     private Timestamp modified;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final class Status {
+
+        public static final int WAIT_FOR_PAYMENT = 1;
+        public static final int DELIVERING = 2;
+        public static final int DELIVERED = 3;
+
+        public static final String WAIT_FOR_PAYMENT_KEY = "WAIT_FOR_PAYMENT";
+        public static final String DELIVERING_KEY = "DELIVERING";
+        public static final String DELIVERED_KEY = "DELIVERED";
+
+        public static final String WAIT_FOR_PAYMENT_NAME = "Wait for payment";
+        public static final String DELIVERING_NAME = "Delivering";
+        public static final String DELIVERED_NAME = "Delivered";
+
+    }
 }

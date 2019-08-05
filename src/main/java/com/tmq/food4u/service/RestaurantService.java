@@ -17,6 +17,8 @@ public interface RestaurantService {
 
     Iterable<Restaurant> findAll();
 
+    Optional<Restaurant> findById(Long restaurantId);
+
     List<MenuItem> getMenu(Long restaurantId);
 
     Optional<Restaurant> createNew(CreateRestaurantRequest request);
