@@ -1,5 +1,6 @@
 package com.tmq.food4u.service.impl;
 
+import com.tmq.food4u.converter.F4uMapper;
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Order;
 import com.tmq.food4u.dao.entity.OrderMenuItems;
@@ -13,7 +14,6 @@ import com.tmq.food4u.service.OrderMenuItemsService;
 import com.tmq.food4u.service.OrderService;
 import com.tmq.food4u.service.RestaurantService;
 import com.tmq.food4u.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +44,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMenuItemsService orderMenuItemsService;
 
+    @Autowired
+    private F4uMapper mapper;
+
     @Override
     public List<Order> findByUserId(Long userId) {
         return orderRepository.findByUserId(userId);
@@ -63,52 +66,29 @@ public class OrderServiceImpl implements OrderService {
         Optional<Restaurant> optRestaurant = restaurantService.findById(restaurantId);
         if (!optRestaurant.isPresent()) return Optional.empty();
 
+        // Get MenuItem entity
         List<MenuItemInfo> items = request.getItems();
         items.forEach(item -> {
             Optional<MenuItem> opt = menuItemService.findById(item.getId());
             if (!opt.isPresent()) return;
             item.setMenuItem(opt.get());
         });
-
         items = items.stream()
-                .map(info -> {
-                    MenuItemInfo menuItemInfo = new MenuItemInfo();
-                    BeanUtils.copyProperties(info, menuItemInfo);
-
-                    Optional<MenuItem> opt = menuItemService.findById(info.getId());
-                    if (!opt.isPresent()) return menuItemInfo;
-
-                    menuItemInfo.setMenuItem(opt.get());
-                    return menuItemInfo;
-                })
                 .filter(info -> info.getMenuItem() != null)
                 .collect(Collectors.toList());
 
-        long amount = 0L;
-        for (MenuItemInfo menuItemInfo : items) {
-            MenuItem menuItem = menuItemInfo.getMenuItem();
-            amount += menuItemInfo.getQuantity() * menuItem.getPrice();
-        }
-
-        // Save order
-        Order order = new Order();
-        order.setUser(optUser.get());
-        order.setRestaurant(optRestaurant.get());
-        order.setStatus(Order.Status.WAIT_FOR_PAYMENT);
-        order.setAmount(amount);
+        // Create order and save
+        Order order = mapper.toOrder(optUser.get(), optRestaurant.get(), items);
         order = orderRepository.save(order);
 
         // Save order_menu
         Order finalOrder = order;
-        List<OrderMenuItems> orderMenuItems = items.stream().map(menuInfo -> {
-            OrderMenuItems omi = new OrderMenuItems();
-            omi.setOrderMenuItemsPk(new OrderMenuItems.OrderMenuItemsPk(finalOrder, menuInfo.getMenuItem()));
-            omi.setQuantity(menuInfo.getQuantity());
-            return omi;
-        }).collect(Collectors.toList());
-
+        List<OrderMenuItems> orderMenuItems = items.stream()
+            .map(menuInfo -> mapper.toOrderMenuItems(finalOrder, menuInfo))
+            .collect(Collectors.toList());
         orderMenuItemsService.saveAll(orderMenuItems);
 
+        // return result
         return Optional.ofNullable(order);
     }
 }

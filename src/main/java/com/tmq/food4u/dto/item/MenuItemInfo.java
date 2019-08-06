@@ -20,6 +20,6 @@ public class MenuItemInfo implements Serializable {
     private String note;
 
     // bonus
-    private MenuItem menuItem;
+    private transient MenuItem menuItem;
 
 }
