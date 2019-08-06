@@ -1,5 +1,6 @@
 package com.tmq.food4u.controller;
 
+import com.tmq.food4u.common.exception.F4uBusinessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
