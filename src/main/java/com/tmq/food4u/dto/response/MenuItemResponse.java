@@ -14,6 +14,8 @@ import java.io.Serializable;
 @Setter
 public class MenuItemResponse implements Serializable {
 
+    private static final long serialVersionUID = -36318278912946008L;
+
     private Long id;
     private String name;
     private Integer category;

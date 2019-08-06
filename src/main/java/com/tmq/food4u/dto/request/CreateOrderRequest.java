@@ -16,6 +16,8 @@ import java.util.List;
 @Setter
 public class CreateOrderRequest implements Serializable {
 
+    private static final long serialVersionUID = 3023597845099067674L;
+
     private Long userId;
     private Long restaurantId;
     private List<MenuItemInfo> items;

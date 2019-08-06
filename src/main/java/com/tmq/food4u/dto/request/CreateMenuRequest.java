@@ -14,6 +14,8 @@ import java.io.Serializable;
 @Setter
 public class CreateMenuRequest implements Serializable {
 
+    private static final long serialVersionUID = -7811839041012590545L;
+
     private String name;
     private int category;
     private int price;

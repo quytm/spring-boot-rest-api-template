@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 @Table(name = "restaurants")
 public class Restaurant implements Serializable {
 
+    private static final long serialVersionUID = -8247847344180654515L;
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

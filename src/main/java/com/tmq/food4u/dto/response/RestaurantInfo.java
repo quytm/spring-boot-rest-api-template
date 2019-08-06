@@ -14,6 +14,8 @@ import java.io.Serializable;
 @Setter
 public class RestaurantInfo implements Serializable {
 
+    private static final long serialVersionUID = 3384588469747152123L;
+
     private String name;
     private String summary;
     private String image;

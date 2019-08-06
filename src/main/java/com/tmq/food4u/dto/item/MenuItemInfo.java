@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Setter
 public class MenuItemInfo implements Serializable {
 
+    private static final long serialVersionUID = 1170588899282531062L;
+
     private Long id;
     private int quantity;
     private String note;

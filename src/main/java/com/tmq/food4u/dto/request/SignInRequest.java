@@ -14,6 +14,8 @@ import java.io.Serializable;
 @Setter
 public class SignInRequest implements Serializable {
 
+    private static final long serialVersionUID = -3983565377004298039L;
+
     private String username;
     private String password;
     private String passwordConfirmation;

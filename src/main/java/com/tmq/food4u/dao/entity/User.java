@@ -25,6 +25,8 @@ import java.sql.Timestamp;
 @Table(name = "users")
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 6927402911548535814L;
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

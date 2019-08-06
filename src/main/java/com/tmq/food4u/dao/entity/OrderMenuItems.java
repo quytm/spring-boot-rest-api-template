@@ -31,6 +31,8 @@ import java.sql.Timestamp;
 @Table(name = "order_menus")
 public class OrderMenuItems implements Serializable {
 
+    private static final long serialVersionUID = -5648334615006446811L;
+
     @EmbeddedId
     private OrderMenuItemsPk orderMenuItemsPk = new OrderMenuItemsPk();
 
