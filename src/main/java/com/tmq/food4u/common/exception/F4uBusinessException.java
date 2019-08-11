@@ -34,6 +34,8 @@ public class F4uBusinessException extends RuntimeException {
 
     public static class InvalidInputException extends F4uBusinessException {
 
+        private static final long serialVersionUID = 4835774135375067631L;
+
         public InvalidInputException() {
             super(F4UErrorCode.INVALID_INPUT_CODE, F4UErrorCode.INVALID_INPUT_MESSAGE);
         }
@@ -44,6 +46,42 @@ public class F4uBusinessException extends RuntimeException {
 
         public InvalidInputException(String field, String message) {
             super(F4UErrorCode.INVALID_INPUT_CODE, field, message);
+        }
+
+    }
+
+    public static class NotFoundEntityException extends F4uBusinessException {
+
+        private static final long serialVersionUID = -5447173555951242083L;
+
+        public NotFoundEntityException() {
+            super(F4UErrorCode.NOT_FOUND_ENTITY_CODE, F4UErrorCode.NOT_FOUND_ENTITY_MESSAGE);
+        }
+
+        public NotFoundEntityException(String message) {
+            super(F4UErrorCode.NOT_FOUND_ENTITY_CODE, message);
+        }
+
+        public NotFoundEntityException(String field, String message) {
+            super(F4UErrorCode.NOT_FOUND_ENTITY_CODE, field, message);
+        }
+
+    }
+
+    public static class FailedToExecuteException extends F4uBusinessException {
+
+        private static final long serialVersionUID = 2125777865234583584L;
+
+        public FailedToExecuteException() {
+            super(F4UErrorCode.FAILED_TO_EXECUTE_CODE, F4UErrorCode.FAILED_TO_EXECUTE_MESSAGE);
+        }
+
+        public FailedToExecuteException(String message) {
+            super(F4UErrorCode.FAILED_TO_EXECUTE_CODE, message);
+        }
+
+        public FailedToExecuteException(String field, String message) {
+            super(F4UErrorCode.FAILED_TO_EXECUTE_CODE, field, message);
         }
 
     }

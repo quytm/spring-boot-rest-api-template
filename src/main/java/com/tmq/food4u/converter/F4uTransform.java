@@ -1,8 +1,10 @@
 package com.tmq.food4u.converter;
 
 import com.tmq.food4u.dao.entity.MenuItem;
+import com.tmq.food4u.dao.entity.Order;
 import com.tmq.food4u.dao.entity.Restaurant;
 import com.tmq.food4u.dao.entity.User;
+import com.tmq.food4u.dto.response.CreateOrderResponse;
 import com.tmq.food4u.dto.response.MenuItemResponse;
 import com.tmq.food4u.dto.response.RestaurantInfo;
 import com.tmq.food4u.dto.response.SignInResponse;
@@ -60,6 +62,13 @@ public class F4uTransform {
     public SignInResponse toSignInResponse(User user) {
         SignInResponse response = new SignInResponse();
         response.setUsername(user.getUsername());
+        return response;
+    }
+
+    public CreateOrderResponse toCreateOrderResponse(Order order) {
+        CreateOrderResponse response = new CreateOrderResponse();
+        response.setId(order.getId());
+        response.setAmount(order.getAmount());
         return response;
     }
 

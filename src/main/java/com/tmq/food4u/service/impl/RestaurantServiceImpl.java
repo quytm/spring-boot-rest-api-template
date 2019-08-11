@@ -1,5 +1,6 @@
 package com.tmq.food4u.service.impl;
 
+import com.tmq.food4u.common.exception.F4uBusinessException;
 import com.tmq.food4u.converter.F4uMapper;
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Restaurant;
@@ -58,7 +59,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Optional<MenuItem> createNewMenu(Long restaurantId, CreateMenuRequest request) {
         Optional<Restaurant> opt = restaurantRepository.findById(restaurantId);
-        if (!opt.isPresent()) return Optional.empty();
+        if (!opt.isPresent()) throw new F4uBusinessException.NotFoundEntityException("Restaurant not found");
 
         Restaurant restaurant = opt.get();
         return menuItemService.createNewMenu(restaurant, request);

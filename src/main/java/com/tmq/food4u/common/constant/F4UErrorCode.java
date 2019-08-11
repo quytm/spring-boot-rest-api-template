@@ -28,6 +28,9 @@ public class F4UErrorCode {
     public static final String ACCESS_RESOURCES_CODE          = "06";
     public static final String ACCESS_RESOURCES_MESSAGE       = "No permission to access";
 
+    public static final String FAILED_TO_EXECUTE_CODE         = "07";
+    public static final String FAILED_TO_EXECUTE_MESSAGE      = "Failed to execute";
+
     public static final String UNKNOWN_ERROR                  = "99";
     public static final String UNKNOWN_ERROR_MESSAGE          = "Internal errors";
 

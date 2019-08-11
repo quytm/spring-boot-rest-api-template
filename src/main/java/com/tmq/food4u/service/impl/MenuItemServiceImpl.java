@@ -1,5 +1,6 @@
 package com.tmq.food4u.service.impl;
 
+import com.tmq.food4u.common.exception.F4uBusinessException;
 import com.tmq.food4u.converter.F4uMapper;
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Restaurant;
@@ -38,7 +39,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 
     @Override
     public Optional<MenuItem> createNewMenu(Restaurant restaurant, CreateMenuRequest request) {
-        if (request == null) return Optional.empty();
+        if (request == null) throw new F4uBusinessException.InvalidInputException("Request for Creating new menu is invalid");
 
         MenuItem menuItem = mapper.toMenuItem(restaurant, request);
 

@@ -1,10 +1,11 @@
 package com.tmq.food4u.controller;
 
+import com.tmq.food4u.common.exception.F4uBusinessException;
+import com.tmq.food4u.converter.F4uTransform;
 import com.tmq.food4u.dao.entity.Order;
 import com.tmq.food4u.dto.request.CreateOrderRequest;
 import com.tmq.food4u.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private F4uTransform transform;
+
     @GetMapping("")
     public ResponseEntity getAll(@RequestParam("user_id") Long userId) {
         return ResponseEntity.ok(orderService.findByUserId(userId));
@@ -36,9 +40,9 @@ public class OrderController {
     public ResponseEntity create(@RequestBody CreateOrderRequest request) {
         Optional<Order> opt = orderService.create(request);
 
-        if (!opt.isPresent()) return new ResponseEntity("Failed", HttpStatus.BAD_REQUEST);
+        if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot create Order");
 
-        return ResponseEntity.ok(opt.get());
+        return ResponseEntity.ok(transform.toCreateOrderResponse(opt.get()));
     }
 
 }

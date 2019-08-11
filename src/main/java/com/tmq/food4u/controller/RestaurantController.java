@@ -1,13 +1,16 @@
 package com.tmq.food4u.controller;
 
+import com.tmq.food4u.common.constant.F4UErrorCode;
+import com.tmq.food4u.common.exception.F4uBusinessException;
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Restaurant;
 import com.tmq.food4u.dto.request.CreateMenuRequest;
 import com.tmq.food4u.dto.request.CreateRestaurantRequest;
+import com.tmq.food4u.dto.response.F4uResponse;
+import com.tmq.food4u.dto.response.MenuItemResponse;
 import com.tmq.food4u.service.RestaurantService;
 import com.tmq.food4u.converter.F4uTransform;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +47,7 @@ public class RestaurantController {
     public ResponseEntity addNew(@RequestBody CreateRestaurantRequest request) {
         Optional<Restaurant> opt = restaurantService.createNew(request);
 
-        if (!opt.isPresent()) return new ResponseEntity("Failed", HttpStatus.BAD_REQUEST);
+        if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot add new Restaurant");
 
         return ResponseEntity.ok(transform.toResponse(opt.get()));
     }
@@ -60,7 +63,7 @@ public class RestaurantController {
                                      @RequestBody CreateMenuRequest request) {
         Optional<MenuItem> opt = restaurantService.createNewMenu(restaurantId, request);
 
-        if (!opt.isPresent()) return new ResponseEntity("Failed", HttpStatus.BAD_REQUEST);
+        if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot add new Menu");
 
         return ResponseEntity.ok(transform.toResponse(opt.get()));
     }

@@ -1,5 +1,6 @@
 package com.tmq.food4u.service.impl;
 
+import com.tmq.food4u.common.exception.F4uBusinessException;
 import com.tmq.food4u.converter.F4uMapper;
 import com.tmq.food4u.dao.entity.MenuItem;
 import com.tmq.food4u.dao.entity.Order;
@@ -54,17 +55,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> create(CreateOrderRequest request) {
-        if (request == null) return Optional.empty();
+        if (request == null) throw new F4uBusinessException.InvalidInputException("Request for Creating order is invalid");
 
         // Get User
         Long userId = request.getUserId();
         Optional<User> optUser = userService.findById(userId);
-        if (!optUser.isPresent()) return Optional.empty();
+        if (!optUser.isPresent()) throw new F4uBusinessException.NotFoundEntityException("User not found");
 
         // Get restaurant
         Long restaurantId = request.getRestaurantId();
         Optional<Restaurant> optRestaurant = restaurantService.findById(restaurantId);
-        if (!optRestaurant.isPresent()) return Optional.empty();
+        if (!optRestaurant.isPresent()) throw new F4uBusinessException.NotFoundEntityException("Restaurant not found");
 
         // Get MenuItem entity
         List<MenuItemInfo> items = request.getItems();
