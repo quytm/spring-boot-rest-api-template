@@ -7,7 +7,6 @@ import com.tmq.food4u.dao.entity.Restaurant;
 import com.tmq.food4u.dto.request.CreateMenuRequest;
 import com.tmq.food4u.dto.request.CreateRestaurantRequest;
 import com.tmq.food4u.dto.response.F4uResponse;
-import com.tmq.food4u.dto.response.MenuItemResponse;
 import com.tmq.food4u.service.RestaurantService;
 import com.tmq.food4u.converter.F4uTransform;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class RestaurantController {
     @GetMapping("")
     public ResponseEntity getAll() {
         Iterable<Restaurant> restaurants = restaurantService.findAll();
-        return ResponseEntity.ok(transform.toResponse(restaurants));
+        return response(toResult(transform.toResponse(restaurants)));
     }
 
     @PostMapping("")
@@ -49,13 +48,13 @@ public class RestaurantController {
 
         if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot add new Restaurant");
 
-        return ResponseEntity.ok(transform.toResponse(opt.get()));
+        return response(toResult(transform.toResponse(opt.get())));
     }
 
     @GetMapping("/{id}/menu")
     public ResponseEntity getMenu(@PathVariable("id") Long restaurantId) {
         List<MenuItem> menuItems = restaurantService.getMenu(restaurantId);
-        return ResponseEntity.ok(transform.toMenuItemResponse(menuItems));
+        return response(toResult(transform.toMenuItemResponse(menuItems)));
     }
 
     @PostMapping("/{id}/menu")
@@ -65,7 +64,21 @@ public class RestaurantController {
 
         if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot add new Menu");
 
-        return ResponseEntity.ok(transform.toResponse(opt.get()));
+        return response(toResult(transform.toResponse(opt.get())));
+    }
+
+    // private method
+
+    private <T> ResponseEntity<F4uResponse<T>> response(F4uResponse<T> data) {
+        return ResponseEntity.ok(data);
+    }
+
+    private <T> F4uResponse<T> toResult(T data) {
+        F4uResponse<T> response = new F4uResponse<>();
+        response.setCode(F4UErrorCode.SUCCESS);
+        response.setMessage(F4UErrorCode.SUCCESS_DESCRIPTION);
+        response.setData(data);
+        return response;
     }
 
 }

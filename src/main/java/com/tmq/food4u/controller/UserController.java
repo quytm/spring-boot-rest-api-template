@@ -1,9 +1,11 @@
 package com.tmq.food4u.controller;
 
+import com.tmq.food4u.common.constant.F4UErrorCode;
 import com.tmq.food4u.common.exception.F4uBusinessException;
 import com.tmq.food4u.converter.F4uTransform;
 import com.tmq.food4u.dao.entity.User;
 import com.tmq.food4u.dto.request.SignInRequest;
+import com.tmq.food4u.dto.response.F4uResponse;
 import com.tmq.food4u.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,20 @@ public class UserController {
 
         if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot sign in");
 
-        return ResponseEntity.ok(transform.toSignInResponse(opt.get()));
+        return response(toResult(transform.toSignInResponse(opt.get())));
     }
 
+    // private method
+
+    private <T> ResponseEntity<F4uResponse<T>> response(F4uResponse<T> data) {
+        return ResponseEntity.ok(data);
+    }
+
+    private <T> F4uResponse<T> toResult(T data) {
+        F4uResponse<T> response = new F4uResponse<>();
+        response.setCode(F4UErrorCode.SUCCESS);
+        response.setMessage(F4UErrorCode.SUCCESS_DESCRIPTION);
+        response.setData(data);
+        return response;
+    }
 }

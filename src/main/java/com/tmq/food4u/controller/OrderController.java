@@ -1,9 +1,11 @@
 package com.tmq.food4u.controller;
 
+import com.tmq.food4u.common.constant.F4UErrorCode;
 import com.tmq.food4u.common.exception.F4uBusinessException;
 import com.tmq.food4u.converter.F4uTransform;
 import com.tmq.food4u.dao.entity.Order;
 import com.tmq.food4u.dto.request.CreateOrderRequest;
+import com.tmq.food4u.dto.response.F4uResponse;
 import com.tmq.food4u.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class OrderController {
 
     @GetMapping("")
     public ResponseEntity getAll(@RequestParam("user_id") Long userId) {
-        return ResponseEntity.ok(orderService.findByUserId(userId));
+        return response(toResult(orderService.findByUserId(userId)));
     }
 
     @PostMapping("")
@@ -42,7 +44,21 @@ public class OrderController {
 
         if (!opt.isPresent()) throw new F4uBusinessException.FailedToExecuteException("Cannot create Order");
 
-        return ResponseEntity.ok(transform.toCreateOrderResponse(opt.get()));
+        return response(toResult(transform.toCreateOrderResponse(opt.get())));
+    }
+
+    // private method
+
+    private <T> ResponseEntity<F4uResponse<T>> response(F4uResponse<T> data) {
+        return ResponseEntity.ok(data);
+    }
+
+    private <T> F4uResponse<T> toResult(T data) {
+        F4uResponse<T> response = new F4uResponse<>();
+        response.setCode(F4UErrorCode.SUCCESS);
+        response.setMessage(F4UErrorCode.SUCCESS_DESCRIPTION);
+        response.setData(data);
+        return response;
     }
 
 }
