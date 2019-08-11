@@ -28,10 +28,7 @@ import java.util.stream.Collectors;
  * Date  : Jul 31, 2019
  */
 @Service("orderService")
-public class OrderServiceImpl implements OrderService {
-
-    @Autowired
-    private OrderRepository orderRepository;
+public class OrderServiceImpl extends BaseServiceImpl<OrderRepository, Order, Long> implements OrderService {
 
     @Autowired
     private UserService userService;
@@ -50,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findByUserId(Long userId) {
-        return orderRepository.findByUserId(userId);
+        return repo.findByUserId(userId);
     }
 
     @Override
@@ -80,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 
         // Create order and save
         Order order = mapper.toOrder(optUser.get(), optRestaurant.get(), items);
-        order = orderRepository.save(order);
+        order = repo.save(order);
 
         // Save order_menu
         Order finalOrder = order;

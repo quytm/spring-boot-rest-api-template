@@ -16,24 +16,15 @@ import java.util.Optional;
  * Date  : Aug 01, 2019
  */
 @Service("userService")
-public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
+public class UserServiceImpl extends BaseServiceImpl<UserRepository, User, Long> implements UserService {
 
     @Autowired
     private F4uMapper mapper;
 
     @Override
-    public Optional<User> findById(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-    @Override
     public Optional<User> addNew(SignInRequest request) {
         User user = mapper.toUser(request);
-        User savedUser = userRepository.save(user);
-
-        return Optional.ofNullable(savedUser);
+        return save(user);
     }
+
 }

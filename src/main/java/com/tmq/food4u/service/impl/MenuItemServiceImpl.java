@@ -19,22 +19,14 @@ import java.util.Optional;
  * Date  : Jul 31, 2019
  */
 @Service("menuItemService")
-public class MenuItemServiceImpl implements MenuItemService {
-
-    @Autowired
-    private MenuItemRepository menuItemRepository;
+public class MenuItemServiceImpl extends BaseServiceImpl<MenuItemRepository, MenuItem, Long> implements MenuItemService {
 
     @Autowired
     private F4uMapper mapper;
 
     @Override
-    public Optional<MenuItem> findById(Long id) {
-        return menuItemRepository.findById(id);
-    }
-
-    @Override
     public List<MenuItem> findByRestaurantId(Long restaurantId) {
-        return menuItemRepository.findByRestaurantId(restaurantId);
+        return repo.findByRestaurantId(restaurantId);
     }
 
     @Override
@@ -43,6 +35,6 @@ public class MenuItemServiceImpl implements MenuItemService {
 
         MenuItem menuItem = mapper.toMenuItem(restaurant, request);
 
-        return Optional.ofNullable(menuItemRepository.save(menuItem));
+        return Optional.ofNullable(repo.save(menuItem));
     }
 }

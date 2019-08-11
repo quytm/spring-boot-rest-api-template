@@ -21,10 +21,7 @@ import java.util.Optional;
  * Date  : Jul 31, 2019
  */
 @Service("restaurantService")
-public class RestaurantServiceImpl implements RestaurantService {
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+public class RestaurantServiceImpl extends BaseServiceImpl<RestaurantRepository, Restaurant, Long> implements RestaurantService {
 
     @Autowired
     private MenuItemService menuItemService;
@@ -33,22 +30,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     private F4uMapper mapper;
 
     @Override
-    public Iterable<Restaurant> findAll() {
-        return restaurantRepository.findAll();
-    }
-
-    @Override
-    public Optional<Restaurant> findById(Long restaurantId) {
-        return restaurantRepository.findById(restaurantId);
-    }
-
-    @Override
     public Optional<Restaurant> createNew(CreateRestaurantRequest request) {
-
         Restaurant restaurant = mapper.toRestaurant(request);
-        Restaurant newRestaurant = restaurantRepository.save(restaurant);
-
-        return Optional.ofNullable(newRestaurant);
+        return save(restaurant);
     }
 
     @Override
@@ -58,7 +42,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Optional<MenuItem> createNewMenu(Long restaurantId, CreateMenuRequest request) {
-        Optional<Restaurant> opt = restaurantRepository.findById(restaurantId);
+        Optional<Restaurant> opt = findById(restaurantId);
         if (!opt.isPresent()) throw new F4uBusinessException.NotFoundEntityException("Restaurant not found");
 
         Restaurant restaurant = opt.get();

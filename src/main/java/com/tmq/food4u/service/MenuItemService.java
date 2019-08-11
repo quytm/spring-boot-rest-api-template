@@ -12,9 +12,7 @@ import java.util.Optional;
  * Email : minhquylt95@gmail.com
  * Date  : Jul 31, 2019
  */
-public interface MenuItemService {
-
-    Optional<MenuItem> findById(Long id);
+public interface MenuItemService extends BaseService<MenuItem, Long> {
 
     List<MenuItem> findByRestaurantId(Long restaurantId);
 

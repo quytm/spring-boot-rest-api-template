@@ -13,11 +13,7 @@ import java.util.Optional;
  * Email : minhquylt95@gmail.com
  * Date  : Jul 31, 2019
  */
-public interface RestaurantService {
-
-    Iterable<Restaurant> findAll();
-
-    Optional<Restaurant> findById(Long restaurantId);
+public interface RestaurantService extends BaseService<Restaurant, Long> {
 
     List<MenuItem> getMenu(Long restaurantId);
 

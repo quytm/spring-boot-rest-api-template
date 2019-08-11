@@ -10,9 +10,7 @@ import java.util.Optional;
  * Email : minhquylt95@gmail.com
  * Date  : Aug 01, 2019
  */
-public interface UserService {
-
-    Optional<User> findById(Long userId);
+public interface UserService extends BaseService<User, Long> {
 
     Optional<User> addNew(SignInRequest request);
 

@@ -11,7 +11,7 @@ import java.util.Optional;
  * Email : minhquylt95@gmail.com
  * Date  : Jul 31, 2019
  */
-public interface OrderService {
+public interface OrderService extends BaseService<Order, Long> {
 
     List<Order> findByUserId(Long userId);
 
