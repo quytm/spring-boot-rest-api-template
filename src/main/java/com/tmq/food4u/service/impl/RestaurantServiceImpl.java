@@ -10,6 +10,8 @@ import com.tmq.food4u.dto.request.CreateRestaurantRequest;
 import com.tmq.food4u.service.MenuItemService;
 import com.tmq.food4u.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.Optional;
  * Date  : Jul 31, 2019
  */
 @Service("restaurantService")
+@CacheConfig(cacheNames = {"RESTAURANT_CACHE"})
 public class RestaurantServiceImpl extends BaseServiceImpl<RestaurantRepository, Restaurant, Long> implements RestaurantService {
 
     @Autowired
@@ -36,6 +39,7 @@ public class RestaurantServiceImpl extends BaseServiceImpl<RestaurantRepository,
     }
 
     @Override
+    @Cacheable(key = "'getMenu_' + #restaurantId")
     public List<MenuItem> getMenu(Long restaurantId) {
         return menuItemService.findByRestaurantId(restaurantId);
     }
